@@ -1,0 +1,40 @@
+{% set nbMax = 0 %}
+{%for i in list %}
+    {% set nbMax =max(i.nb_participants,nbMax) %} 
+{%endfor %}
+<table border="1">
+    <tr>
+        <th>ref</th>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>date_deb</th>
+        <th>date_fin</th>
+        <th>nb_participants</th>
+    </tr>
+    {% for  i in list %}
+        <tr>
+        {#{% if 'theorique' in i.Description %}#}
+        {#{% if i.nb_participants == nbMax %}#}
+        <td>{{i.ref}}</td>
+        <td>{{i.Titre|upper}}</td>
+        <td>{{i.Description}}</td>
+        <td>{{i.date_debut}}</td>
+        <td>{{i.date_fin}}</td>
+        <td>{{i.nb_participants}}
+        {% if i.nb_participants ==0 %}
+          <form action= "{{path('formparticiper',{'Titre':i.Titre}) }}">  
+          <button> Participer </button>
+        {%endif %}
+        </td>
+        
+        {%else %} 
+        <strong>la table est vide</strong>
+        </tr>
+    {%endfor %} 
+</table>
+<h1>nombre de formations: {{list|length}}</h1>
+{% set nbTotal=0 %}
+{% for i in list %}
+    {% set nbTotal = nbTotal+i.nb_participants %}
+{% endfor %}
+<h1>le nombre total des participants est {{nbTotal}}</h1>
